@@ -1,0 +1,1392 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pinup Backend API's Specification",
+    "description": "Pinup is not a Software product, it is a thinking which make your task easy and efficient. And we are plotting our thining in software product. Which will make our work easy. Basically we are planning to make product based on some different technologies.",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Bridgelabz.com",
+      "email": "admin@bridgelabz.com"
+    }
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Pinup Administration",
+      "description": "Pinup, Topic & User."
+    },
+    {
+      "name": "User Access",
+      "description": "User access & domain selection"
+    },
+    {
+      "name": "Anonymous Access",
+      "description": "Default home & search functionaliy"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "Content-Type": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "paths": {
+    "/admin/register": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Register the Admin for the pinup.",
+        "operationId": "signUP",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "emailID",
+            "emailId": "Valid Email ID",
+            "in": "formData",
+            "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
+            "required": true,
+            "type": "string",
+            "default": "admin@bridgelabz.com"
+          },
+          {
+            "name": "Username",
+            "Username": "User Name",
+            "in": "formData",
+            "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
+            "required": true,
+            "type": "string",
+            "default": "admin@bridgelabz.com"
+          },
+          {
+            "name": "password",
+            "password": "Password",
+            "in": "formData",
+            "description": "Provide a valid Password",
+            "required": true,
+            "type": "string",
+            "format": "password",
+            "default": "Bridge@123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin registered successful",
+            "schema": {
+              "$ref": "#/definitions/adminRegisterSuccess"
+            }
+          },
+          "401": {
+            "description": "Admin registered failed",
+            "schema": {
+              "$ref": "#/definitions/adminRegisterFaliure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/register/domain": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Register domain name under the Admin account for the pinup.",
+        "operationId": "domainSelection",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "domain": "Valid Sub domain",
+            "in": "formData",
+            "description": "Provide a valid sub-domain name, It should be unique for the domain e.g. tech, prog, news etc. for tech.pinup.com / news.pinup.com",
+            "required": true,
+            "type": "string",
+            "default": "tech"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "Timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Domain name selection successfull",
+            "schema": {
+              "$ref": "#/definitions/adminDomainRegistrationSuccess"
+            }
+          },
+          "401": {
+            "description": "Domain name selection failed",
+            "schema": {
+              "$ref": "#/definitions/adminDomainRegistrationFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/signin": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "It authenticates the user email from company database and it returns success response with email and token. For every REST call you need to pass token and crossponding email with some extra request body which is based on REST call's",
+        "operationId": "signIn",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "emailId",
+            "emailId": "Valid Email ID",
+            "in": "formData",
+            "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
+            "required": true,
+            "type": "string",
+            "default": "admin@bridgelabz.com"
+          },
+          {
+            "name": "password",
+            "password": "Password",
+            "in": "formData",
+            "description": "Provide a valid Password",
+            "required": true,
+            "type": "string",
+            "format": "password",
+            "default": "Bridge@123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authentcation Successful",
+            "schema": {
+              "$ref": "#/definitions/adminAuthSuccess"
+            }
+          },
+          "401": {
+            "description": "Authentcation Failure",
+            "schema": {
+              "$ref": "#/definitions/adminAuthFaliure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/sigout": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Admin sigout, remove the sessions & cookie values.",
+        "operationId": "",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "Timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Administrator sigout successful",
+            "schema": {
+              "$ref": "#/definitions/adminSignOutSuccess"
+            }
+          }
+        }
+      }
+    },
+    "/admin/sendInvite": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Send invites to the email address.",
+        "operationId": "sendInvitesByEmailID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "emailID",
+            "emailID": "Valid Email ID",
+            "in": "query",
+            "description": "Valid Email ID should be provided to send the email notification with the domain & token verification value.",
+            "required": true,
+            "type": "integer"
+          },{
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sending the notification successfully & inviting the user.",
+            "schema": {
+              "$ref": "#/definitions/sendInviteNotificationSuccess"
+            }
+          },
+          "401": {
+            "description": "Failed to validate email ID OR Filed to send notification",
+            "schema": {
+              "$ref": "#/definitions/sendInviteNotificationFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/addTopic": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Through this API admin can add topics to the said sub domain",
+        "operationId": "addTopic",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "topic",
+            "topic": "Topic for admin",
+            "in": "query",
+            "description": "Valid topic should be provided",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Adding the topic to the said sub domain.",
+            "schema": {
+              "$ref": "#/definitions/addTopicSuccess"
+            }
+          },
+          "401": {
+            "description": "Topic additin validation errors OR other errors",
+            "schema": {
+              "$ref": "#/definitions/addTopicFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getTopics": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Get the list of topics",
+        "operationId": "getTopics",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the list of topics for the sub domain.",
+            "schema": {
+              "$ref": "#/definitions/getTopicsSuccess"
+            }
+          },
+          "401": {
+            "description": "Failed to get the topics for sub doamin",
+            "schema": {
+              "$ref": "#/definitions/getTopicsFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/updateTopic": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Through this API admin can update topic details to the said sub domain",
+        "operationId": "updateTopicByID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "topicID",
+            "topicID": "Topic ID",
+            "in": "query",
+            "description": "Valid topic ID will update the topic details",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Adding the pinup data using scrape process.",
+            "schema": {
+              "$ref": "#/definitions/addPinupSuccess"
+            }
+          },
+          "401": {
+            "description": "URL validation or Pinup scrape process failed",
+            "schema": {
+              "$ref": "#/definitions/addPinupFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/removeTopic": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Remove the topic from the sub domain",
+        "operationId": "removeTopicByID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "topicID",
+            "topicID": "Topic ID",
+            "in": "query",
+            "description": "Valid topic ID will update the topic details",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Remove the topic from the sub domain.",
+            "schema": {
+              "$ref": "#/definitions/removeTopicByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Unable to remove the topic from the Sub domain",
+            "schema": {
+              "$ref": "#/definitions/removeTopicByIDFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/addPinup": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Recently added pinup data with the Reference URL link (scraper) for the admin sub domain.",
+        "operationId": "getPinupByRecent",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pinupurl",
+            "pinupurl": "Pinup Url for scraper",
+            "in": "query",
+            "description": "Valid URL should be provided. The scrape process will work to dig the title, image, keywords, tags, description, main link from the link.",
+            "required": true,
+            "type": "integer"
+          },{
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Adding the pinup data using scrape process.",
+            "schema": {
+              "$ref": "#/definitions/addPinupSuccess"
+            }
+          },
+          "401": {
+            "description": "URL validation or Pinup scrape process failed",
+            "schema": {
+              "$ref": "#/definitions/addPinupFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/editPinup": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Get the pinup details for the added pinup",
+        "operationId": "getPinupByID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pinupID",
+            "pinupID": "Pinup ID",
+            "in": "query",
+            "description": "Pinup ID required to filter the pinup data from the pinup schema",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the pinup data based on the Pinup ID passed",
+            "schema": {
+              "$ref": "#/definitions/getPinupByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Pinup data failed to fetch",
+            "schema": {
+              "$ref": "#/definitions/getPinupByIDFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/removePinup": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Remove the pinup from the sub doamin",
+        "operationId": "removePinupByID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pinupID",
+            "pinupID": "Pinup ID",
+            "in": "query",
+            "description": "Pinup ID required to filter the pinup data from the pinup schema",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Remove (Soft detete) the pinup",
+            "schema": {
+              "$ref": "#/definitions/removePinupByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Failed to soft delete the pinup",
+            "schema": {
+              "$ref": "#/definitions/removePinupByIDFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/updatePinup": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Update the pinup details e.g. title, image, tags, description etc.",
+        "operationId": "updatePinupByID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pinupID",
+            "pinupID": "Pinup ID to identify & update the pinup",
+            "in": "formData",
+            "description": "Validate the correct pinup using pinup ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "title",
+            "title" : "Title of the pinup",
+            "in": "formData",
+            "description": "Title field for the pinup",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "imageUrl",
+            "imageUrl": "Image for the pinup, Validate the pinup at the backend.",
+            "in": "formData",
+            "description": "URL field for the pinup",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "description": "Description regarding the pinup url added",
+            "in": "formData",
+            "description": "Description field for the pinup",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "tags": "Tags for the pinup.",
+            "in": "formData",
+            "description": "Tags field for the pinup",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updating the pinup data using pinup ID.",
+            "schema": {
+              "$ref": "#/definitions/updatePinupSuccess"
+            }
+          },
+          "401": {
+            "description": "URL validation or Pinup scrape process failed",
+            "schema": {
+              "$ref": "#/definitions/updatePinupFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getRecentPinup": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Recently added pinup data with the Reference URL link (scraper) for the admin sub domain.",
+        "operationId": "getPinupByRecent",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "You need to pass token along with your request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recently added pinups",
+            "schema": {
+              "$ref": "#/definitions/pinupRecentResponse"
+            }
+          }
+        }
+      }
+    },
+    "/admin/updatePinupTopicy": {
+      "post": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Update the pinup topic",
+        "operationId": "updatePinupTopicByID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pinupID",
+            "pinupID": "Pinup ID to identify & update the pinup",
+            "in": "formData",
+            "description": "Validate the correct pinup using pinup ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "topicID",
+            "topicID" : "Topic ID",
+            "in": "formData",
+            "description": "Pinup to be linked for the specified topic ID",
+            "required": true,
+            "type": "Interger"
+          },
+          {
+            "name": "timeStamp",
+            "in": "query",
+            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updating the pinup topic using pinup ID & topic ID.",
+            "schema": {
+              "$ref": "#/definitions/updatePinupTopicSuccess"
+            }
+          },
+          "401": {
+            "description": "Topic ID & Pinup ID validation failure",
+            "schema": {
+              "$ref": "#/definitions/updatePinupTopicFailure"
+            }
+          }
+        }
+      }
+    },
+
+    "/sigup/": {
+      "post": {
+        "tags": [
+          "User Access"
+        ],
+        "description": "Based on the invites, Singup the user using the email ID & Access token. Also set the domain same as the invited domain",
+        "operationId": "signUp",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "emailId",
+            "emailId": "Valid Email ID",
+            "in": "formData",
+            "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
+            "required": true,
+            "type": "string",
+            "default": "admin@bridgelabz.com"
+          },
+          {
+            "name": "tokenValidation",
+            "tokenValidation": "Token to validate",
+            "in": "formData",
+            "description": "Valid token provided thorugh the email",
+            "required": true,
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User signup successful",
+            "schema": {
+              "$ref": "#/definitions/userSingUpSuccess"
+            }
+          },
+          "401": {
+            "description": "User signup failure",
+            "schema": {
+              "$ref": "#/definitions/userSingUpFailure"
+            }
+          }
+        }
+      }
+    },
+
+    "/pinup/action": {
+      "post": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "User will be able to like/unlike the pinup",
+        "operationId": "pinupLikeByID",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "pinupID",
+            "pinupID": "Pinup ID",
+            "in": "formData",
+            "description": "Provide a valid pinup ID",
+            "required": true,
+            "type": "Interger",
+            "default": ""
+          },
+          {
+            "name": "like",
+            "liek": "Like action on pinup",
+            "in": "formData",
+            "description": "Like/Unlike action to set the counter for Pinup Like",
+            "required": false,
+            "type": "boolean",
+            "default": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pinup like count is being update with +1",
+            "schema": {
+              "$ref": "#/definitions/pinupActionByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Unable to update the like count with +1",
+            "schema": {
+              "$ref": "#/definitions/pinupActionByIDFailure"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "adminRegisterSuccess": {
+      "properties": {
+        "success": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Admin registerated successful"
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "adminRegisterFaliure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Admin registeration failed"
+        }
+      }
+    },
+    "adminDomainRegistrationSuccess": {
+      "properties": {
+        "success": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Domain name registerated successful"
+        },
+        "domainRedirection": {
+          "required": true,
+          "type": "string",
+          "example":"tech.pinup.com"
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "adminDomainRegistrationFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Domain name registerated successful"
+        }
+      }
+    },
+    "adminAuthSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Admin logging in Successfully"
+        },
+        "domainRedirection": {
+          "required": true,
+          "type": "string",
+          "example":"tech.pinup.com"
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "adminAuthFaliure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Admin logging failed"
+        }
+      }
+    },
+    "adminSignOutSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Admin signout Successfully"
+        },
+        "domainRedirection": {
+          "required": true,
+          "type": "string",
+          "example":"pinup.com"
+        }
+      }
+    },
+    "pinupRecentResponse": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Fetched the recent pinups Successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "pinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_directives.htm",
+              "title": "Angular 2 - Directives",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "In this chapter let us study about Angular 2 directive. Templates of the Angular are dynamic, when these templates are rendered by Angular, it changes the DOM according to the directive fed instructions. The directive is a class which contains metadata which will be attached to the class by the @Directive decorator.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 3,
+              "views": 50
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "addPinupSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Pinup added successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "pinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "addPinupFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Pinup addition failure",
+            "Pinup url already exists"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "pinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "getPinupByIDSuccess":{
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Pinup data fetched Successfully"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "pinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "getPinupByIDFailure":{
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Failure in fetching the Pinup data",
+            "Pinup Identifier (ID) not set, Pinup Indentifier cannot be blank",
+            "Invalid Pinup Identifier (ID), Pinup Identifier doesn't exists"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "pinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "updatePinupSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Pinup edited successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "pinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "updatePinupFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Pinup editing failure",
+            "Pinup Identifier (ID) not set, Pinup Indentifier cannot be blank",
+            "Invalid Pinup Identifier (ID), Pinup Identifier doesn't exists",
+            "Title not set, Title cannot be blank",
+            "Image url not valid, provide a valid url link to scrape"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "updatePinupTopicSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Pinup topic updated successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "updatePinupTopicFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Pinup editing failure",
+            "Pinup Identifier (ID) not set, Pinup Indentifier cannot be blank",
+            "Invalid Pinup Identifier (ID), Pinup Identifier doesn't exists",
+            "Topic Identifier (ID) not set, Topic Indentifier cannot be blank",
+            "Invalid Topic Identifier (ID), Topic Identifier doesn't exists"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "sendInviteNotificationSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Invite notification sent successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "sendInviteNotificationFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Invite notification failure",
+            "Email ID not set, Email ID cannot be blank",
+            "Invalid Email ID, Eamil ID is not valid",
+            "Invite notification failed to send, Email service not working"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    }
+  }
+}
