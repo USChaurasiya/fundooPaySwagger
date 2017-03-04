@@ -5,9 +5,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "stop": "pkill --signal SIGINT fundoohr",
-    "watch": "nodemon server.js",
-    "test": "eslint ."
   },
   "engine": {
     "node": "7.5.x",
@@ -46,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/dilip-bridgelabz/fundooHR-backend-production/issues"
   },
-  "homepage": "https://github.com/dilip-bridgelabz/fundooHR-backend-production"
+  "homepage": "https://github.com/dilip-bridgelabz/fundooHR-backend-production",
+  "config": {
+   "unsafe-perm": true
+}
 }
