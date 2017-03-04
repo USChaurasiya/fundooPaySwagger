@@ -10,7 +10,7 @@
       "email": "admin@bridgelabz.com"
     }
   },
-  "basePath": "/",
+  "basePath": "https://pinupswagger.herokuapp.com",
   "tags": [
     {
       "name": "Pinup Administration",
