@@ -4,7 +4,7 @@
   "description": "Fundoo HR Backend",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js"
   },
   "engine": {
     "node": "7.5.x",
