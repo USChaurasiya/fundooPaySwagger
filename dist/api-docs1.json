@@ -10,7 +10,7 @@
       "email": "admin@bridgelabz.com"
     }
   },
-  "basePath": "https://pinupswagger.herokuapp.com",
+  "basePath": "/",
   "tags": [
     {
       "name": "Pinup Administration",
@@ -54,7 +54,7 @@
         "parameters": [
           {
             "name": "emailID",
-            "emailId": "Valid Email ID",
+            "emailID": "Valid Email ID",
             "in": "formData",
             "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
             "required": true,
@@ -119,13 +119,6 @@
             "default": "tech"
           },
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "Timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "x-token",
             "in": "header",
             "description": "Token needs to be validated for every request.",
@@ -162,8 +155,8 @@
         ],
         "parameters": [
           {
-            "name": "emailId",
-            "emailId": "Valid Email ID",
+            "name": "emailID",
+            "emailID": "Valid Email ID",
             "in": "formData",
             "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
             "required": true,
@@ -210,13 +203,6 @@
         ],
         "parameters": [
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "Timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "x-token",
             "in": "header",
             "description": "Token needs to be validated for every request.",
@@ -250,12 +236,6 @@
             "emailID": "Valid Email ID",
             "in": "query",
             "description": "Valid Email ID should be provided to send the email notification with the domain & token verification value.",
-            "required": true,
-            "type": "integer"
-          },{
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
             "required": true,
             "type": "integer"
           },
@@ -296,16 +276,9 @@
         "parameters": [
           {
             "name": "topic",
-            "topic": "Topic for admin",
+            "topic": "Topic name for the current sub domain",
             "in": "query",
             "description": "Valid topic should be provided",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
             "required": true,
             "type": "integer"
           },
@@ -333,24 +306,52 @@
         }
       }
     },
-    "/admin/getTopics": {
+    "/admin/getTopic": {
       "get": {
         "tags": [
           "Pinup Administration"
         ],
-        "description": "Get the list of topics",
-        "operationId": "getTopics",
+        "description": "Get the topic details",
+        "operationId": "getTopicByID",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
             "required": true,
-            "type": "integer"
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the topic details for the sub domain.",
+            "schema": {
+              "$ref": "#/definitions/getTopicSuccess"
+            }
           },
+          "401": {
+            "description": "Failed to get the topic details for sub doamin",
+            "schema": {
+              "$ref": "#/definitions/getTopicFailure"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getTopicList": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Get the list of topics",
+        "operationId": "getTopicList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
             "name": "x-token",
             "in": "header",
@@ -363,13 +364,13 @@
           "200": {
             "description": "Get the list of topics for the sub domain.",
             "schema": {
-              "$ref": "#/definitions/getTopicsSuccess"
+              "$ref": "#/definitions/getTopicListSuccess"
             }
           },
           "401": {
             "description": "Failed to get the topics for sub doamin",
             "schema": {
-              "$ref": "#/definitions/getTopicsFailure"
+              "$ref": "#/definitions/getTopicListFailure"
             }
           }
         }
@@ -391,13 +392,6 @@
             "topicID": "Topic ID",
             "in": "query",
             "description": "Valid topic ID will update the topic details",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
             "required": true,
             "type": "integer"
           },
@@ -445,13 +439,6 @@
             "type": "integer"
           },
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "x-token",
             "in": "header",
             "description": "Token needs to be validated for every request.",
@@ -491,12 +478,6 @@
             "pinupurl": "Pinup Url for scraper",
             "in": "query",
             "description": "Valid URL should be provided. The scrape process will work to dig the title, image, keywords, tags, description, main link from the link.",
-            "required": true,
-            "type": "integer"
-          },{
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
             "required": true,
             "type": "integer"
           },
@@ -544,13 +525,6 @@
             "type": "integer"
           },
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "x-token",
             "in": "header",
             "description": "Token needs to be validated for every request.",
@@ -590,13 +564,6 @@
             "pinupID": "Pinup ID",
             "in": "query",
             "description": "Pinup ID required to filter the pinup data from the pinup schema",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
             "required": true,
             "type": "integer"
           },
@@ -676,13 +643,6 @@
             "type": "string"
           },
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "x-token",
             "in": "header",
             "description": "Token needs to be validated for every request.",
@@ -718,13 +678,6 @@
         ],
         "parameters": [
           {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "x-token",
             "in": "header",
             "description": "You need to pass token along with your request.",
@@ -734,7 +687,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Recently added pinups",
+            "description": "Successful get the eecently added pinups by the admin",
             "schema": {
               "$ref": "#/definitions/pinupRecentResponse"
             }
@@ -742,19 +695,19 @@
         }
       }
     },
-    "/admin/updatePinupTopicy": {
+    "/admin/linkPinupToTopic": {
       "post": {
         "tags": [
           "Pinup Administration"
         ],
-        "description": "Update the pinup topic",
-        "operationId": "updatePinupTopicByID",
+        "description": "Link the pinup to the said topic by passing topic ID",
+        "operationId": "linkPinupToTopicByID",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "pinupID",
+            "name": "pinupID (ID)",
             "pinupID": "Pinup ID to identify & update the pinup",
             "in": "formData",
             "description": "Validate the correct pinup using pinup ID",
@@ -762,19 +715,12 @@
             "type": "integer"
           },
           {
-            "name": "topicID",
+            "name": "topicID (ID)",
             "topicID" : "Topic ID",
             "in": "formData",
-            "description": "Pinup to be linked for the specified topic ID",
+            "description": "Validate the correct topic ID & linked pinup to the topic",
             "required": true,
             "type": "Interger"
-          },
-          {
-            "name": "timeStamp",
-            "in": "query",
-            "description": "timestamp is wrapping the date and time in milliseconds format 1483401600000 ",
-            "required": true,
-            "type": "integer"
           },
           {
             "name": "x-token",
@@ -788,13 +734,13 @@
           "200": {
             "description": "Updating the pinup topic using pinup ID & topic ID.",
             "schema": {
-              "$ref": "#/definitions/updatePinupTopicSuccess"
+              "$ref": "#/definitions/linkPinupToTopicSuccess"
             }
           },
           "401": {
             "description": "Topic ID & Pinup ID validation failure",
             "schema": {
-              "$ref": "#/definitions/updatePinupTopicFailure"
+              "$ref": "#/definitions/linkPinuptoTopicFailure"
             }
           }
         }
@@ -814,8 +760,8 @@
         ],
         "parameters": [
           {
-            "name": "emailId",
-            "emailId": "Valid Email ID",
+            "name": "emailID",
+            "emailID": "Valid Email ID",
             "in": "formData",
             "description": "Provide a valid email address to authenticate. e.g. your@some-domain.com",
             "required": true,
@@ -1026,6 +972,133 @@
         }
       }
     },
+    "getTopicSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Topic details Successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "topicData": {
+          "type": "schema",
+          "example": [
+            {
+              "id": "111",
+              "topic": "JavaScript"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "getTopicFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Failure in fetching topic details"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "getTopicListSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Fetched the list of topics Successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "topicData": {
+          "type": "schema",
+          "example": [
+            {
+              "id": "111",
+              "topic": "JavaScript"
+            },
+            {
+              "id": "112",
+              "topic": "Java"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "getTopicListFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Failure in fetching topic list"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "topicData": {
+          "type": "schema",
+          "example": [
+            {
+              "id": "111",
+              "topic": "JavaScript"
+            },
+            {
+              "id": "112",
+              "topic": "Java"
+            }
+          ]
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
     "pinupRecentResponse": {
       "properties": {
         "status": {
@@ -1046,6 +1119,7 @@
           "type": "schema",
           "example": [
             {
+              "ID": 124,
               "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
               "title": "Angular2 Services",
               "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
@@ -1059,6 +1133,7 @@
               "views": 40
             },
             {
+              "ID": 125,
               "link": "https://www.tutorialspoint.com/angular2/angular2_directives.htm",
               "title": "Angular 2 - Directives",
               "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
@@ -1146,6 +1221,105 @@
         }
       }
     },
+    "addTopicSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Topic added successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "addTopicFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Topic addition failure",
+            "Topic already exists for the sub domain"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "removeTopicByIDSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Topic removed successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "removeTopicByIDFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Failed to remove the topic",
+            "Topic Identifier (ID) not set, Topic Indentifier cannot be blank",
+            "Invalid Topic Identifier (ID), Topic Identifier doesn't exists"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
     "getPinupByIDSuccess":{
       "properties": {
         "status": {
@@ -1168,6 +1342,7 @@
           "type": "schema",
           "example": [
             {
+              "ID": 123,
               "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
               "title": "Angular2 Services",
               "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
@@ -1200,7 +1375,7 @@
           "required": true,
           "type": "string",
           "example": [
-            "Failure in fetching the Pinup data",
+            "Failed to fetch the Pinup data",
             "Pinup Identifier (ID) not set, Pinup Indentifier cannot be blank",
             "Invalid Pinup Identifier (ID), Pinup Identifier doesn't exists"
           ]
@@ -1285,7 +1460,7 @@
         }
       }
     },
-    "updatePinupTopicSuccess": {
+    "linkPinupToTopicSuccess": {
       "properties": {
         "status": {
           "required": true,
@@ -1295,7 +1470,7 @@
         "message": {
           "required": true,
           "type": "string",
-          "example": "Pinup topic updated successfully"
+          "example": "Pinup linked to topic successfully"
         },
         "timeStamp": {
           "type": "integer",
@@ -1308,7 +1483,7 @@
         }
       }
     },
-    "updatePinupTopicFailure": {
+    "linkPinupToTopicFailure": {
       "properties": {
         "status": {
           "required": true,
@@ -1319,7 +1494,7 @@
           "required": true,
           "type": "string",
           "example": [
-            "Pinup editing failure",
+            "Failed to link pinup to the topic",
             "Pinup Identifier (ID) not set, Pinup Indentifier cannot be blank",
             "Invalid Pinup Identifier (ID), Pinup Identifier doesn't exists",
             "Topic Identifier (ID) not set, Topic Indentifier cannot be blank",
