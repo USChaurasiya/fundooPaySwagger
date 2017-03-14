@@ -804,7 +804,6 @@
         }
       }
     },
-
     "/signup/": {
       "post": {
         "tags": [
@@ -957,13 +956,13 @@
           "200": {
             "description": "Set the topics interest for the user",
             "schema": {
-              "$ref": "#/definitions/setUserTopicsByIDSuccess"
+              "$ref": "#/definitions/getTopicListSuccess"
             }
           },
           "401": {
             "description": "Unable to set the interest topic for user",
             "schema": {
-              "$ref": "#/definitions/setUserTopicsByIDFailure"
+              "$ref": "#/definitions/getTopicListFailure"
             }
           }
         }
