@@ -695,6 +695,64 @@
         }
       }
     },
+    "/admin/setDefaultRecommendedPinup": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Set the default recommended pinups from the backend only set 10.",
+        "operationId": "setDefaultRecommendedPinup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "You need to pass token along with your request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get the recently added pinups by the admin",
+            "schema": {
+              "$ref": "#/definitions/pinupRecommendedResponse"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getDefaultRecommendedPinup": {
+      "get": {
+        "tags": [
+          "Pinup Administration"
+        ],
+        "description": "Recomended pinups based on the cookies and views of the pinup details.",
+        "operationId": "getPinupByRecommended",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "You need to pass token along with your request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get the eecently added pinups by the admin",
+            "schema": {
+              "$ref": "#/definitions/pinupRecommendedResponse"
+            }
+          }
+        }
+      }
+    },
     "/admin/linkPinupToTopic": {
       "post": {
         "tags": [
@@ -747,7 +805,7 @@
       }
     },
 
-    "/sigup/": {
+    "/signup/": {
       "post": {
         "tags": [
           "User Access"
@@ -794,7 +852,287 @@
         }
       }
     },
+    "/getUserSubDomainList": {
+      "post": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Get the list of the subdomain for user selection",
+        "operationId": "getUserSubDomainList",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success in getting the sub domain list",
+            "schema": {
+              "$ref": "#/definitions/getSubDomainListSuccess"
+            }
+          },
+          "401": {
+            "description": "Unable to set the interest topic for user",
+            "schema": {
+              "$ref": "#/definitions/getSubDomainListFailure"
+            }
+          }
+        }
+      }
+    },
+    "/setUserSubDomain": {
+      "post": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Setting the interest topics for user",
+        "operationId": "setUserSubDomainByID",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "subdomainID",
+            "subdomainID": "Sub Domain ID",
+            "in": "formData",
+            "description": "Provide a valid sub domain ID",
+            "required": true,
+            "type": "Interger",
+            "default": ""
+          },
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success in setting the sub domain for the user",
+            "schema": {
+              "$ref": "#/definitions/setUserSubDomainByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Failure in setting the sub domain for the user",
+            "schema": {
+              "$ref": "#/definitions/setUserSubDomainByIDFailure"
+            }
+          }
+        }
+      }
+    },
+    "/getTopicList": {
+      "get": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Getting the list of the topic",
+        "operationId": "getTopicList",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Token needs to be validated for every request.",
+            "required": true,
+            "type": "String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set the topics interest for the user",
+            "schema": {
+              "$ref": "#/definitions/setUserTopicsByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Unable to set the interest topic for user",
+            "schema": {
+              "$ref": "#/definitions/setUserTopicsByIDFailure"
+            }
+          }
+        }
+      }
+    },
+    "/setUserTopic": {
+      "post": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Setting the interest topics for user",
+        "operationId": "setUserTopicsByID",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topicID",
+            "topicID": "Topic ID",
+            "in": "formData",
+            "description": "Provide a valid pinup ID",
+            "required": true,
+            "type": "Interger",
+            "default": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set the topics interest for the user",
+            "schema": {
+              "$ref": "#/definitions/setUserTopicsByIDSuccess"
+            }
+          },
+          "401": {
+            "description": "Unable to set the interest topic for user",
+            "schema": {
+              "$ref": "#/definitions/setUserTopicsByIDFailure"
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Pinup home page for all the users, show the 5 latest from recent, related & recommended",
+        "operationId": "home",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull get all top 5 recent, related & recommended ",
+            "schema": {
+              "$ref": "#/definitions/homeSuccess"
+            }
+          },
+          "401": {
+            "description": "Failure to get recent, related & recommended",
+            "schema": {
+              "$ref": "#/definitions/homeFailure"
+            }
+          }
+        }
+      }
+    },
+    "/recent/:0": {
+      "get": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Recent pinups using pagination",
+        "operationId": "getRecent",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Success in getting the recent pinup items. Recently published pinups.",
+            "schema": {
+              "$ref": "#/definitions/getRecentSuccess"
+            }
+          },
+          "401": {
+            "description": "Failure in getting recent pinups",
+            "schema": {
+              "$ref": "#/definitions/getRecentFailure"
+            }
+          }
+        }
+      }
+    },
+    "/recommended/:0": {
+      "get": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Recommended pinups using pagination",
+        "operationId": "getRecommended",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
 
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull getting recommended pinup data, The pinup data needs to be based on the cookie set for the latest viewed pinups or the data set from the backend admin",
+            "schema": {
+              "$ref": "#/definitions/getRecommendedSuccess"
+            }
+          },
+          "401": {
+            "description": "Failed to get recommended pinup data",
+            "schema": {
+              "$ref": "#/definitions/getRecommendedFailure"
+            }
+          }
+        }
+      }
+    },
+    "/related/:topic/:0": {
+      "get": {
+        "tags": [
+          "Anonymous Access"
+        ],
+        "description": "Related pinups using pagination for the topic",
+        "operationId": "getRelatedByTopic",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topic",
+            "topic": "topic",
+            "in": "formData",
+            "description": "Provide topic",
+            "required": true,
+            "type": "Interger",
+            "default": ""
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfull get related pinups by topic. Show the latest pinups for the topic.",
+            "schema": {
+              "$ref": "#/definitions/getRelatedByTopicSuccess"
+            }
+          },
+          "401": {
+            "description": "Failure to get related pinups for topic",
+            "schema": {
+              "$ref": "#/definitions/getRelatedByTopicFailure"
+            }
+          }
+        }
+      }
+    },
     "/pinup/action": {
       "post": {
         "tags": [
@@ -841,7 +1179,7 @@
           }
         }
       }
-    }
+    },
   },
   "definitions": {
     "adminRegisterSuccess": {
@@ -972,6 +1310,7 @@
         }
       }
     },
+
     "getTopicSuccess": {
       "properties": {
         "status": {
@@ -1073,24 +1412,63 @@
         "message": {
           "required": true,
           "type": "string",
-          "example": "Failure in fetching topic list"
+          "example": [
+            "Failure in fetching topic list"
+          ]
         },
         "timeStamp": {
           "type": "integer",
           "example": 1487844504000
         },
-        "topicData": {
-          "type": "schema",
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "removeTopicByIDSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Topic removed successfully"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "removeTopicByIDFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
           "example": [
-            {
-              "id": "111",
-              "topic": "JavaScript"
-            },
-            {
-              "id": "112",
-              "topic": "Java"
-            }
+            "Failed to remove the topic",
+            "Topic Identifier (ID) not set, Topic Indentifier cannot be blank",
+            "Invalid Topic Identifier (ID), Topic Identifier doesn't exists"
           ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
         },
         "token": {
           "required": true,
@@ -1155,6 +1533,7 @@
         }
       }
     },
+
     "addPinupSuccess": {
       "properties": {
         "status": {
@@ -1270,56 +1649,7 @@
         }
       }
     },
-    "removeTopicByIDSuccess": {
-      "properties": {
-        "status": {
-          "required": true,
-          "type": "Interger",
-          "example": true
-        },
-        "message": {
-          "required": true,
-          "type": "string",
-          "example": "Topic removed successfully"
-        },
-        "timeStamp": {
-          "type": "integer",
-          "example": 1487844504000
-        },
-        "token": {
-          "required": true,
-          "type": "string",
-          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
-        }
-      }
-    },
-    "removeTopicByIDFailure": {
-      "properties": {
-        "status": {
-          "required": true,
-          "type": "Interger",
-          "example": false
-        },
-        "message": {
-          "required": true,
-          "type": "string",
-          "example": [
-            "Failed to remove the topic",
-            "Topic Identifier (ID) not set, Topic Indentifier cannot be blank",
-            "Invalid Topic Identifier (ID), Topic Identifier doesn't exists"
-          ]
-        },
-        "timeStamp": {
-          "type": "integer",
-          "example": 1487844504000
-        },
-        "token": {
-          "required": true,
-          "type": "string",
-          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
-        }
-      }
-    },
+
     "getPinupByIDSuccess":{
       "properties": {
         "status": {
@@ -1560,6 +1890,367 @@
           "required": true,
           "type": "string",
           "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+
+    "userSingUpSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Successfully getting the recent, recommended & related pinups"
+        }
+      }
+    },
+    "userSingUpFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Failure in signUP",
+            "User Email Address is blank",
+            "User Email Address already registered"
+          ]
+        }
+      }
+    },
+    "homeSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Successfully getting the recent, recommended & related pinups"
+        },
+        "recentPinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "ID": 123,
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "ID": 124,
+              "link": "https://www.tutorialspoint.com/angular2/angular2.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 10,
+              "views": 70
+            }
+          ]
+        },
+        "relatedPinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "ID": 123,
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "ID": 124,
+              "link": "https://www.tutorialspoint.com/angular2/angular2.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 10,
+              "views": 70
+            }
+          ]
+        },
+        "recommendedPinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "ID": 123,
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "ID": 124,
+              "link": "https://www.tutorialspoint.com/angular2/angular2.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 10,
+              "views": 70
+            }
+          ]
+        }
+      }
+    },
+    "sendInviteNotificationFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": false
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Invite notification failure",
+            "Email ID not set, Email ID cannot be blank",
+            "Invalid Email ID, Eamil ID is not valid",
+            "Invite notification failed to send, Email service not working"
+          ]
+        },
+        "timeStamp": {
+          "type": "integer",
+          "example": 1487844504000
+        },
+        "token": {
+          "required": true,
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+        }
+      }
+    },
+    "getRecentSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Successfully fetched the recent pinups"
+        },
+        "recentPinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "ID": 123,
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "ID": 124,
+              "link": "https://www.tutorialspoint.com/angular2/angular2.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 10,
+              "views": 70
+            }
+          ]
+        }
+      }
+    },
+    "getRecentFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Failure in fetched the recent pinups"
+        }
+      }
+    },
+    "getRecommendedSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Successfully fetched the recommended pinups"
+        },
+        "recommendedPinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "ID": 123,
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "ID": 124,
+              "link": "https://www.tutorialspoint.com/angular2/angular2.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 10,
+              "views": 70
+            }
+          ]
+        }
+      }
+    },
+    "getRecommendedFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Failure in fetched the recommended pinups"
+        }
+      }
+    },
+    "getRelatedByTopicSuccess": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Successfully fetched the recommended pinups"
+        },
+        "recommendedPinupData": {
+          "type": "schema",
+          "example": [
+            {
+              "ID": 123,
+              "link": "https://www.tutorialspoint.com/angular2/angular2_services.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 10,
+              "unliked": 5,
+              "views": 40
+            },
+            {
+              "ID": 124,
+              "link": "https://www.tutorialspoint.com/angular2/angular2.htm",
+              "title": "Angular2 Services",
+              "imageUrl": "https://www.tutorialspoint.com/angular2/images/angular2-mini-logo.jpg",
+              "topic": "tech",
+              "description": "Services are JavaScript functions that are responsible for doing a specific task only. Angular services are injected using Dependency Injection mechanism and include the value, function or feature which is required by the application. There nothing much about service in Angular and there is no ServiceBase class, but still services can be treated as fundamental to Angular application.",
+              "tags": "Angular 2, Tutorial, Overview, Environment, Hello World, Architecture, Modules, Components, Templates, Metadata, Data Binding, Data Display, User Input, Forms, Services, Directives, Dependency Injection.",
+              "creationDate": 1477308028,
+              "mainLInk": "https://www.tutorialspoint.com",
+              "liked": 20,
+              "unliked": 10,
+              "views": 70
+            }
+          ]
+        }
+      }
+    },
+    "getRelatedByTopicFailure": {
+      "properties": {
+        "status": {
+          "required": true,
+          "type": "Interger",
+          "example": true
+        },
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": [
+            "Failure in fetched the Related pinups",
+            "No Topic Identifier(ID), Topic Identifier(ID) cannot be blank",
+            "Invalid Topic Identifier(ID), Provide a valid topic Identifier(ID)"
+          ]
         }
       }
     }
