@@ -1,0 +1,695 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample fundooPay server. You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "version": "1.0.0",
+    "title": "FundooPay",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "FundooPay.swagger.io",
+  "basePath": "/v2",
+  "tags": [{
+      "name": "ResidentUser",
+      "description": "Everything about ResidentUser",
+      "externalDocs": {
+        "description": "Find out more about ResidentUser",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "ServiceProvider",
+      "description": "Everything about ServiceProvider",
+      "externalDocs": {
+        "description": "Find out more about ServiceProvider",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "SP_BillTransaction",
+      "description": "Everything about SPBillTransaction",
+      "externalDocs": {
+        "description": "Find out more about SPBillTransaction",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/spBillTransaction": {
+      "post": {
+        "tags": [
+          "SP_BillTransaction"
+        ],
+        "summary": "Create new SP_BillTransaction",
+        "description": "This can only be done after the logged in user",
+        "operationId": "saveBill",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Create Bill Object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/SPBillTransaction"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Bill generated sucessfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid Crediential supplied"
+          },
+          "default": {
+            "description": "successful Operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SP_BillTransaction"
+        ],
+        "summary": "Update customer Bill",
+        "description": "This can only be done after create bill and logged in user.",
+        "operationId": "UpdateBill",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Update Bill Object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/SPBillTransaction"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Bill generated sucessfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid Crediential supplied"
+          },
+          "default": {
+            "description": "successful Operation"
+          }
+        }
+      }
+    },
+    "/residentUser": {
+      "post": {
+        "tags": [
+          "ResidentUser"
+        ],
+        "summary": "Create Resident user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createResidentUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Created user object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/ResidentUser"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid user crediential supplied"
+          },
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/residentUser/login": {
+      "post": {
+        "tags": [
+          "ResidentUser"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginResidentUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful login operation",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the user"
+              },
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/residentUser/logout": {
+      "get": {
+        "tags": [
+          "ResidentUser"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutResidentUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful logout operation"
+          }
+        }
+      }
+    },
+    "/residentUser/{username}": {
+      "get": {
+        "tags": [
+          "ResidentUser"
+        ],
+        "summary": "Get user by user name",
+        "description": "",
+        "operationId": "getResidentUserByName",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "username",
+          "in": "path",
+          "description": "The name that needs to be fetched. Use userName for testing.",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful user fetched operation",
+            "schema": {
+              "$ref": "#/definitions/ResidentUser"
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ResidentUser"
+        ],
+        "summary": "Updated user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateResidentUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResidentUser"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ResidentUser"
+        ],
+        "summary": "Delete user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteResidentUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "username",
+          "in": "path",
+          "description": "The name that needs to be deleted",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/serviceProvider": {
+      "post": {
+        "tags": [
+          "ServiceProvider"
+        ],
+        "summary": "Create Service Provider user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createServiceUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Created Service Provider user object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/ServiceProvider"
+          }
+        }],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/serviceProvider/login": {
+      "post": {
+        "tags": [
+          "ServiceProvider"
+        ],
+        "summary": "Logs Service Provider user into the system",
+        "description": "",
+        "operationId": "loginServiceUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful login operation",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the user"
+              },
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/serviceProvider/logout": {
+      "get": {
+        "tags": [
+          "ServiceProvider"
+        ],
+        "summary": "Logs out Service Provider current logged in user session",
+        "description": "",
+        "operationId": "logoutServiceUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful logout operation"
+          }
+        }
+      }
+    },
+    "/serviceProvider/{username}": {
+      "get": {
+        "tags": [
+          "ServiceProvider"
+        ],
+        "summary": "Get ServiceProvider user by user name",
+        "description": "",
+        "operationId": "getServiceUserByName",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "username",
+          "in": "path",
+          "description": "The name that needs to be fetched. Use ServiceProvider userName for testing. ",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ServiceProvider"
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ServiceProvider"
+        ],
+        "summary": "Updated user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateServiceUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceProvider"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ServiceProvider"
+        ],
+        "summary": "Delete user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteServiceUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "username",
+          "in": "path",
+          "description": "The name that needs to be deleted",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "ResidentUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "landMark": {
+          "type": "string",
+          "description": "According to address"
+        },
+        "pincode": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "ServiceProvider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "shopName": {
+          "type": "string"
+        },
+        "paymentMode": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string",
+          "description": "location according to map"
+        }
+      },
+      "xml": {
+        "name": "ServiceProvider"
+      }
+    },
+    "SPBillTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "billAmount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "generated_Date": {
+          "type": "string"
+        },
+        "is_Accepted": {
+          "type": "boolean",
+          "description": "if customer bill accepted"
+        },
+        "is_Paid": {
+          "type": "boolean",
+          "description": "if customer bill paid"
+        },
+        "sp_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "sp_id for foreign key to map with ServiceProvider"
+        },
+        "rp_id": {
+          "type": "integer",
+          "description": "ResidentUser id who's received bill from ServiceProvider"
+        }
+      },
+      "xml": {
+        "name": "SPBillTransaction"
+      }
+    },
+    "ResidentUserBillTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "billAmount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "accept_Date": {
+          "type": "string"
+        },
+        "due_Date": {
+          "type": "string",
+          "description": "bill due date"
+        },
+        "is_Paid": {
+          "type": "boolean",
+          "description": "if customer bill paid"
+        },
+        "rp_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "rp_id for foreign key to map with ResidentUser"
+        },
+        "sp_id": {
+          "type": "integer",
+          "description": "ServiceProvider id who's sent bill to customer"
+        }
+      },
+      "xml": {
+        "name": "SPBillTransaction"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

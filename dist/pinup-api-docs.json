@@ -1,0 +1,1492 @@
+{
+   "swagger":"2.0",
+   "info":{
+      "version":"1.0.0",
+      "title":"Todo App Backend API's Specification",
+      "description":"To-Do List are prioritized lists of all the tasks that you need to carry out. They list everything that you have to do, with the most important tasks at the top of the list, and the least important tasks at the bottom.",
+      "termsOfService":"http://swagger.io/terms/",
+      "contact":{
+         "name":"Bridgelabz.com",
+         "email":"admin@bridgelabz.com"
+      }
+   },
+   "basePath":"/",
+   "tags":[
+      {
+         "name":"ToDo List Registration",
+         "description":"ToDo App Registration Module."
+      },
+      {
+         "name":"ToDo List Login",
+         "description":"User access "
+      },
+      {
+         "name":"ToDo List",
+         "description":"List of Tasks "
+      },
+      {
+         "name":"Navigation Bar",
+         "description":"Basic Navigation Bar to Access Content"
+      }
+   ],
+   "schemes":[
+      "http",
+      "https"
+   ],
+   "Content-Type":[
+      "application/json"
+   ],
+   "consumes":[
+      "application/json"
+   ],
+   "produces":[
+      "application/json"
+   ],
+   "paths":{
+      "/registration":{
+         "post":{
+            "tags":[
+               "ToDo List Registration"
+            ],
+            "description":"Register for the ToDo List.",
+            "operationId":"signUP",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"fullName",
+                  "fullName":"Enter your Full Name",
+                  "in":"formData",
+                  "description":"Provide Full name . e.g. John",
+                  "required":true,
+                  "type":"string",
+                  "default":"uma shankar"
+               },
+               {
+                  "name":"emailID",
+                  "emailID":"Valid Email ID",
+                  "in":"formData",
+                  "description":"Provide a valid email address to authenticate. e.g. your@some-domain.com",
+                  "required":true,
+                  "type":"string",
+                  "default":"admin@bridgelabz.com"
+               },
+               {
+                  "name":"mobile",
+                  "mobile":"Valid Mobile number",
+                  "in":"formData",
+                  "description":"Provide a valid Mobile Number to authenticate. e.g. 99XXXXXXXX",
+                  "required":true,
+                  "type":"number",
+                  "default":"Dont add Country Code (eg:+91)"
+               },
+               {
+                  "name":"password",
+                  "password":"Password",
+                  "in":"formData",
+                  "description":"Provide a valid Password",
+                  "required":true,
+                  "type":"string",
+                  "format":"password",
+                  "default":"Bridge@123"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Registeration successful",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Successfully Registered .."
+                       },
+                       "RegisteredUser": {
+                         "type": "schema",
+                         "example":
+                           {
+                             "ID": 123,
+                             "fullName": "Uma Shankar",
+                             "email": "bridgelabz@domain.com",
+                             "mobile":"9xxxxxxxx",
+                             "password": "bridgeLab"
+                           }
+                       },
+                       "token": {
+                         "required": true,
+                         "type": "string",
+                         "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Registeration failed",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Registration Fail "
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/logIn":{
+         "post":{
+            "tags":[
+               "ToDo List Login"
+            ],
+            "description":"It authenticates the user email from company database and it returns success response with email and token. For every REST call you need to pass token and crossponding email with some extra request body which is based on REST call's",
+            "operationId":"signIn",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"emailID",
+                  "emailID":"Valid Email ID",
+                  "in":"formData",
+                  "description":"Provide a valid email address to authenticate. e.g. your@some-domain.com",
+                  "required":true,
+                  "type":"string",
+                  "default":"admin@bridgelabz.com"
+               },
+               {
+                  "name":"password",
+                  "password":"Password",
+                  "in":"formData",
+                  "description":"Provide a valid Password",
+                  "required":true,
+                  "type":"string",
+                  "format":"password",
+                  "default":"Bridge@123"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Authentcation Successful",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Loging Successfully via Email and Password Authentcation"
+                       },
+                       "sampleLogin": {
+                         "type": "schema",
+                         "example": [
+                           {
+                             "email": "bridgelabz@domain.com",
+                             "password": "bridgeLab"
+                           }
+                         ]
+                       },
+                       "token": {
+                         "required": true,
+                         "type": "string",
+                         "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Authentcation Failure",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Logging Unsuccessfull Due to Authentcation failure "
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/logInByFacebook":{
+         "post":{
+            "tags":[
+               "ToDo List Login"
+            ],
+            "description":"It authenticates the user from Registered Facebook user information and it returns success response with email and token. For every REST call you need to pass token and crossponding email with some extra request body which is based on REST call's",
+            "operationId":"signIn",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"secret key",
+                  "secret Key":"Secret Key provided by Facebook",
+                  "in":"formData",
+                  "description":"Take Secret Code from Already registered facebook  user to authenticate. e.g. XXXXXXX",
+                  "required":true,
+                  "type":"string",
+                  "default":"xxxxxxx"
+               },
+               {
+                  "name":"client Id",
+                  "client Id":"Client ID",
+                  "in":"formData",
+                  "description":"Take Corresponding Facebook User Id",
+                  "required":true,
+                  "type":"string",
+                  "format":"password",
+                  "default":"xxxxxxx"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Authentcation Successful",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Logging Successfully"
+                       },
+                       "token": {
+                         "required": true,
+                         "type": "string",
+                         "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Authentcation Failure",
+                  "schema":{
+                       "properties":{
+                          "status":{
+                             "required":true,
+                             "type":"Interger",
+                             "example":false
+                          },
+                          "message":{
+                             "required":true,
+                             "type":"string",
+                             "example":"Logging failed"
+                          }
+                       }
+                  }
+               }
+            }
+         }
+      },
+      "/user/create":{
+         "post":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Create Own ToDo List.",
+            "operationId":"",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"title",
+                  "title":"formData",
+                  "description":"Title is required to differentiate bewtween one ToDo to Another ToDo ",
+                  "required":true,
+                  "type":"string",
+                  "default":"Abc"
+               },
+               {
+                  "name":"description",
+                  "description":"formData",
+                  "required":true,
+                  "type":"string"
+               },
+               {
+                  "name":"reminder",
+                  "reminder":"formData",
+                  "required":false,
+                  "type":"string"
+               },
+               {
+                  "name":"status",
+                  "status":"status",
+                  "required":true,
+                  "type":"string"
+               },
+               {
+                  "name":"Archived",
+                  "archived":"archived",
+                  "required":false,
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Adding new ToDo items.",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"New ToDo Item is Added Successfully"
+                       },
+                       "sampleToDoItem": {
+                         "type": "schema",
+                         "example": [
+                           {
+                             "ID": 123,
+                             "title": "Travel Plan",
+                             "note":"san francisco to disneyland",
+                             "Date": "20-Mar-2017",
+                             "Archived":"True",
+                             "Status":"Done"
+                           }
+                         ]
+                       },
+                       "token": {
+                         "required": true,
+                         "type": "string",
+                         "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Failed to Add new ToDo Item",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Unable to Add New ToDo Item"
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/user/update":{
+         "put":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Update the ToDo details e.g. title, description etc",
+            "operationId":"updateToDoByID",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"toDoID",
+                  "toDoID":"ToDo ID",
+                  "in":"query",
+                  "description":"Valid ToDo ID will update the ToDo details",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Updating the ToDo Item Data.",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"ToDo Item Updated Successfully"
+                       },
+                       "token": {
+                         "required": true,
+                         "type": "string",
+                         "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Updating ToDo Item Data Failed",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example": [
+                            "Failed to fetch the ToDo Item",
+                            "ToDo Identifier (ID) not set, ToDo Indentifier cannot be blank",
+                            "Invalid ToDo Identifier (ID), ToDo Identifier doesn't exists"
+                          ]
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/user/delete":{
+         "delete":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Remove the Existing ToDo",
+            "operationId":"deleteToDoByID",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"toDoID",
+                  "toDoID":"ToDo ID",
+                  "in":"query",
+                  "description":"Valid ToDo ID will update the ToDo details",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Remove the todo Item.",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"ToDo Item Deleted Successfully"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Unable to remove the ToDo Item",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Unable to delete ToDo Item"
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/user/archive":{
+         "post":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Remove the Existing ToDo",
+            "operationId":"updateToDoByID",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"toDoID",
+                  "toDoID":"ToDo ID",
+                  "in":"query",
+                  "description":"Valid ToDo ID will update the ToDo details",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Archive the ToDo Item.",
+                  "schema":{
+                     "$ref":"#/definitions/archiveToDoItemSuccess"
+                  }
+               },
+               "401":{
+                  "description":"Unable to Archive The ToDo item",
+                  "schema":{
+                     "$ref":"#/definitions/archiveToDoItemFailure"
+                  }
+               }
+            }
+         }
+      },
+      "/user/displayDoneToDoToday":{
+         "get":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Display the ToDo Items that is Completed Today.",
+            "operationId":"getTodayToDoById",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"toDoID",
+                  "toDoID":"ToDo Id to find particular ToDo items",
+                  "in":"query",
+                  "description":"",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Displaying All ToDo Items which is Completed Today.",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Displaying Today's Completed ToDo Item"
+                       }
+                     }
+                  }
+               },
+               "401":{
+                  "description":"Failed to Display Today's ToDo Items",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Error in Displaying Today's Completed ToDo Item"
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/user/displayTodayTask":{
+         "get":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Display the today's Task.",
+            "operationId":"getTodayToDoTask",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"toDoID",
+                  "toDoID":"ToDo Id to find particular Task",
+                  "in":"query",
+                  "description":"",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Displaying All task assign for today.",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Displaying All Task Assign for Today's Successfully"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Failed to display All task assign for today",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Failed to Display Today's Task"
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/user/displayThisWeekTask":{
+         "get":{
+            "tags":[
+               "ToDo List"
+            ],
+            "description":"Display this Week Task.",
+            "operationId":"getThisWeekToDoTask",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"toDoID",
+                  "toDoID":"ToDo Id to find particular Task",
+                  "in":"query",
+                  "description":"",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Displaying All task assign for this Week.",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Successfully Displaying This week ToDo Task"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Failed to display All task assign for this Week",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"Unable to Display this week ToDo Task"
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "/user/updateProfilePic":{
+         "post":{
+            "tags":[
+               "Navigation Bar"
+            ],
+            "description":"Update the User Profile Pic",
+            "operationId":"updateProfileById",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"userID",
+                  "userID":"userID",
+                  "in":"formData",
+                  "description":"User ID required to filter the User data from the User schema",
+                  "required":true,
+                  "type":"integer"
+               },
+               {
+                  "name":"x-token",
+                  "in":"header",
+                  "description":"Token needs to be validated for every request.",
+                  "required":true,
+                  "type":"String"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Profile Pic Updated Successfully..",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":"User Profile Updated Successfully"
+                       }
+                    }
+                  }
+               },
+               "401":{
+                  "description":"Failed to Update Profile Pic",
+                  "schema":{
+                    "properties":{
+                       "status":{
+                          "required":true,
+                          "type":"Interger",
+                          "example":false
+                       },
+                       "message":{
+                          "required":true,
+                          "type":"string",
+                          "example":["Failed to Update Profile Pic ",
+                            "Invalid UserId",
+                            "UserId Can't be Blank.",
+                            "UserId is not valid"
+                          ]
+                       }
+                    }
+                  }
+               }
+            }
+         }
+      },
+      "definitions":{
+         "registerationSuccess":{
+            "properties":{
+               "success":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Registerated successful"
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "registerationFaliure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Registeration failed"
+               }
+            }
+         },
+         "loginAuthSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Logging in Successfully"
+               },
+               "domainRedirection":{
+                  "required":true,
+                  "type":"string",
+                  "example":"tech.todo.com"
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "loginAuthFaliure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Logging failed"
+               }
+            }
+         },
+         "facebookLoginSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Logging in Successfully"
+               },
+               "domainRedirection":{
+                  "required":true,
+                  "type":"string",
+                  "example":"tech.todo.com"
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "facebookLoginFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Logging failed"
+               }
+            }
+         },
+         "addToDoItemSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"ToDo Item Added Successfully"
+               },
+               "domainRedirection":{
+                  "required":true,
+                  "type":"string",
+                  "example":""
+               }
+            }
+         },
+         "addToDoItemFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Failed to Add ToDo Item"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":""
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "updateToDoItemSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"ToDo Item Updated Successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":""
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "updateToDoItemFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to Update ToDo Item"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":""
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "deleteToDoItemSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"ToDo Item Deleted successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":""
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "deleteToDoItemFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to remove the ToDo Item",
+                     "ToDo Identifier (ID) not set, ToDo Indentifier cannot be blank",
+                     "Invalid ToDo Identifier (ID), ToDo Identifier doesn't exists"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":""
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "archiveToDoItemSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"ToDo item successfully Archived"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "archiveToDoItemFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "ToDo Item archive failure"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayDoneToDoSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Done ToDo Displayed successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayDoneToDoFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     " Failed to Display Done ToDo Item "
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayDoneToSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Done ToDo Displayed successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayDoneToFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     " Failed to Display Done ToDo Item "
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayTodayTaskSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Today's Task Displayed Successfully"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayTodayTaskFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to fetch the Today's ToDo Task"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayTodayToDoTaskSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Today's Task Displayed Successfully"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayTodayToDoTaskFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to fetch the Today's ToDo Task"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayThisWeekTaskSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Display This Week ToDo Task successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayThisWeekTaskFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to Display This Week Task"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayThisWeekToDoTaskSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Display This Week ToDo Task successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "displayThisWeekToDoTaskFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to Display This Week Task"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "uploadProfilePicSuccess":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":true
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":"Profile pic updated Successfully"
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         },
+         "uploadProfilePicFailure":{
+            "properties":{
+               "status":{
+                  "required":true,
+                  "type":"Interger",
+                  "example":false
+               },
+               "message":{
+                  "required":true,
+                  "type":"string",
+                  "example":[
+                     "Failed to upload Profile pic"
+                  ]
+               },
+               "timeStamp":{
+                  "type":"integer",
+                  "example":1487844504000
+               },
+               "token":{
+                  "required":true,
+                  "type":"string",
+                  "example":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+               }
+            }
+         }
+      }
+   }
+}

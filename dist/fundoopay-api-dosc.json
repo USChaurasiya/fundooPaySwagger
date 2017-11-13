@@ -1,0 +1,383 @@
+  {
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "FundooPay Backend API's Specification",
+      "description": "FundooPay App MVP (Minimum Viable Product) Product plan is to do a pilot with larger residential complex where the day-to-day transactions between a resident and the multiple service providers is channelised, recorded and made simplified to ensure seamless end-to-end closure.",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "name": "Bridgelabz.com",
+        "email": "admin@bridgelabz.com"
+      }
+    },
+    "basePath": "/",
+    "tags": [{
+        "name": "Resident User Registration",
+        "description": "Resident User Registration for FundooPay."
+      },
+      {
+        "name": "Service Provider Registration",
+        "description": "service Provider/Merchant  Registration for FundooPay."
+      }
+
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "Content-Type": [
+      "application/json"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/serviceprovider": {
+        "post": {
+          "tags": [
+            "Service Provider Registration"
+          ],
+          "summary": "Service Provider / Merchant Registration",
+          "description": "Registration of Merchant/Service Provider for FundooPay Application.",
+          "operationId": "signUP",
+          "produces": [
+              "application/json"
+          ],
+          "parameters": [{
+              "name": "spName",
+              "spName": "Enter the serviceprovider Name",
+              "in": "formData",
+              "description": "Provide serviceprovider name . e.g. John",
+              "required": true,
+              "type": "string",
+              "default": "John Deo"
+            },
+            {
+              "name": "shopName",
+              "shopName": "Enter your Shop name",
+              "in": "formData",
+              "description": "Provide Shop Name . e.g. Natraj",
+              "required": true,
+              "type": "string",
+              "default": "Natraj"
+            },
+            {
+              "name": "mobile",
+              "mobile": "Valid Mobile number",
+              "in": "formData",
+              "description": "Provide a valid Mobile Number to authenticate. e.g. 99XXXXXXXX",
+              "required": true,
+              "type": "number",
+              "default": "Dont add Country Code (eg:+91)"
+            },
+            {
+              "name": "location",
+              "location": "Enter Location",
+              "in": "formData",
+              "description": "Select Shop Location from Map",
+              "required": true,
+              "type": "string",
+              "format": "String",
+              "default": "lat: 40.731,lng: -73.997"
+            },
+            {
+              "name":"serviceType",
+              "serviceType":"Select serviceType",
+              "in":"formData",
+              "description":"Select the Service type",
+              "required":true,
+              "type":"string",
+              "enum": [
+              "Vegetable and Fruit",
+              "Milk Suplier",
+              "Laundry Service",
+              "Stationery",
+              "News Paper",
+              "Plumbing",
+              "Electrical/Electronics",
+              "General Store",
+              "Other"
+            ]
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Registeration successful",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": true
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Successfully Registered .."
+                  },
+                  "token": {
+                    "required": true,
+                    "type": "string",
+                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Registeration failed",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": false
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Registration Failed "
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/serviceprovideruser/requestotp": {
+        "post": {
+          "tags": [
+            "Service Provider Registration"
+          ],
+          "summary": "User Authentication by OTP",
+          "description": "Verifying User By Valid Mobile number.",
+          "operationId": "loginResidentUser",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+            "name": "phone",
+            "in": "formData",
+            "description": "Valid phone number of resident User",
+            "required": true,
+            "type": "number"
+          }],
+          "responses": {
+            "200": {
+              "description": "Resident User verification successful and OTP is send to registered Mobile number.",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": true
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "OTP Successfully to registered Number"
+                  },
+                  "token": {
+                    "required": true,
+                    "type": "string",
+                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Failed to send OTP",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": false
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Failed To send OTP "
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/serviceprovideruser/verifyresidentuser": {
+        "post": {
+          "tags": [
+            "Service Provider Registration"
+          ],
+          "summary": " Service Provider User Authentication by OTP",
+          "description": "Verifying SP User By Valid Mobile number.",
+          "operationId": "loginResidentUser",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+            "name": "otp",
+            "in": "formData",
+            "description": "OTP to verify User",
+            "required": true,
+            "type": "number",
+            "default":"1234"
+          }],
+          "responses": {
+            "200": {
+              "description": "Resident User verification successful.",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": true
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Successfully Verified .."
+                  },
+                  "VerifiedServiceProviderUser": {
+                    "type": "schema",
+                    "example": {
+                      "ID": 123,
+                      "userName": "abc12",
+                      "shopName": "Natraj",
+                      "paymentMode": "Monthly",
+                      "phone": "9xxxxxxxx",
+                      "location": "lat: 40.731, lng: -73.997"
+                    }
+                  },
+                  "token": {
+                    "required": true,
+                    "type": "string",
+                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "User verification failed.",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": false
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Failed to Verify User."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/serviceprovideruser/getbillbyresidentuserid": {
+        "get": {
+          "tags": [
+            "Service Provider Registration"
+          ],
+          "summary": "Fetch all Bill corresponding to a particular Resident User",
+          "description": "Find all Bill related to a resident User.",
+          "operationId": "residentuserbill",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+            "name": "rId",
+            "in": "query",
+            "description": "Resident User Id for which You want to fetch all bill.",
+            "required": true,
+            "type": "number",
+            "default":"1"
+          }],
+          "responses": {
+            "200": {
+              "description": "All Bill fetched Successfully.",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": true
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Fetched All bill related to resident User.."
+                  },
+                  "ListOfBillsForAParticularResidentUser": {
+                    "type": "schema",
+                    "example": [{
+                      "residentId": 5,
+                      "billAmount": 500,
+                      "generatedDate": "15/09/2017",
+                      "isAccepted": "true",
+                      "isPaid": "false",
+                      "bill":{
+                        "type":"string",
+                        "example":"1010101001010101010001000"
+                      }
+                    },
+                    {
+                      "residentId": 10,
+                      "billAmount": 200,
+                      "generatedDate": "5/09/2017",
+                      "isAccepted": "false",
+                      "isPaid": "false",
+                      "bill":{
+                        "type":"string",
+                        "example":"1010101001010101010001000"
+                      }
+                    },
+                    {
+                      "residentId": 11,
+                      "billAmount": 150,
+                      "generatedDate": "1/09/2017",
+                      "isAccepted": "true",
+                      "isPaid": "true",
+                      "bill":{
+                        "type":"string",
+                        "example":"1010101001010101010001000"
+                      }
+                    }
+                  ]
+                  },
+                  "token": {
+                    "required": true,
+                    "type": "string",
+                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBicmlkZ2VsYWJ6LmNvbSIsImlhdCI6MTQ4Nzc2MDY3NSwiZXhwIjoxNDg4OTcwMjc1fQ.ALOhIMuqtczsrZkR-vtTbceP5djAQNk7CCwoZzKkOCY"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Failed to fetch the listof Bill .",
+              "schema": {
+                "properties": {
+                  "status": {
+                    "required": true,
+                    "type": "Interger",
+                    "example": false
+                  },
+                  "message": {
+                    "required": true,
+                    "type": "string",
+                    "example": "failed to feth list of bill"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
