@@ -6,9 +6,10 @@
     "version": "1.0.0",
     "title": "FundooPay Backend API's Specification.",
     "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "email": "uma.chaurasiya@bridgelabz.com"
-    },
+    "contact":{
+         "name":"Bridgelabz.com",
+         "email":"admin@bridgelabz.com"
+      },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
